@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : spring-boot-distributed-scheduled-locks-redis
@@ -19,4 +21,7 @@ import org.springframework.stereotype.Component;
 public class RedisDistributedLock {
     private final RedisTemplate<String, Object> redisTemplate;
 
+    public boolean acquireLock(String lockKey, long timeout, TimeUnit unit) {
+        return redisTemplate.opsForValue().setIfAbsent(lockKey, "locked", timeout, unit);
+    }
 }
