@@ -24,4 +24,8 @@ public class RedisDistributedLock {
     public boolean acquireLock(String lockKey, long timeout, TimeUnit unit) {
         return redisTemplate.opsForValue().setIfAbsent(lockKey, "locked", timeout, unit);
     }
+
+    public void releaseLock(String lockKey) {
+        redisTemplate.delete(lockKey);
+    }
 }
