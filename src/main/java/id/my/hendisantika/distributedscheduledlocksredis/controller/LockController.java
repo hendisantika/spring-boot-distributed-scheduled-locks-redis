@@ -2,7 +2,9 @@ package id.my.hendisantika.distributedscheduledlocksredis.controller;
 
 import id.my.hendisantika.distributedscheduledlocksredis.service.LockService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -15,11 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
  * Time: 06.31
  * To change this template use File | Settings | File Templates.
  */
-@Service
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class LockController {
     private final LockService lockService;
 
-
+    @GetMapping("/perform/{lockKey}")
+    public String performOperation(@PathVariable String lockKey) throws InterruptedException {
+        lockService.performWithLock(lockKey);
+        log.info("Background Operation completed");
+        return "Background Operation completed";
+    }
 }
