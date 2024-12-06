@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : spring-boot-distributed-scheduled-locks-redis
@@ -21,4 +23,18 @@ import org.springframework.stereotype.Service;
 public class LockService {
     private final RedisDistributedLock lock;
 
+    public void performWithLock(String lockKey) throws InterruptedException {
+        if (lock.acquireLock(lockKey, 15000, TimeUnit.MILLISECONDS)) {
+            log.info("Lock acquired. Background Operation started.");
+
+            // Simulate an operation that takes some time
+            Thread.sleep(200);
+
+            log.info("Background Operation completed.");
+            // Optionally, release the lock
+            // lock.releaseLock(lockKey);
+        } else {
+            log.error("Failed to acquire lock. Resource is busy.");
+        }
+    }
 }
