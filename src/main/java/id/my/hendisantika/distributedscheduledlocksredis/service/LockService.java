@@ -3,7 +3,6 @@ package id.my.hendisantika.distributedscheduledlocksredis.service;
 import id.my.hendisantika.distributedscheduledlocksredis.config.RedisDistributedLock;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -20,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Service
-@RequiredArgsConstructor(onConstructor_ = {@Autowired})
+@RequiredArgsConstructor
 public class LockService {
     private final RedisDistributedLock lock;
 
