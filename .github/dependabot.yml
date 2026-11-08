@@ -1,13 +1,67 @@
 version: 2
 updates:
+  # Maven dependencies, plugins and the Maven wrapper (.mvn/wrapper)
   - package-ecosystem: maven
     directory: "/"
     schedule:
       interval: daily
-      time: '05:00'
+      time: "05:00"
       timezone: Asia/Jakarta
     open-pull-requests-limit: 10
-  - package-ecosystem: "github-actions"
+    labels:
+      - "dependencies"
+      - "java"
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+      include: scope
+    groups:
+      spring-boot:
+        patterns:
+          - "org.springframework.boot*"
+          - "org.springframework*"
+      maven-plugins:
+        patterns:
+          - "org.apache.maven*"
+          - "*maven-plugin"
+      maven-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
+        exclude-patterns:
+          - "org.springframework*"
+          - "org.apache.maven*"
+
+  # GitHub Actions used in .github/workflows
+  - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: weekly
+      day: monday
+      time: "05:00"
+      timezone: Asia/Jakarta
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "ci(deps)"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  # Docker images referenced in compose.yaml (Redis, RedisInsight)
+  - package-ecosystem: docker-compose
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "05:00"
+      timezone: Asia/Jakarta
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "docker"
+    commit-message:
+      prefix: "chore(docker)"
