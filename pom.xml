@@ -14,7 +14,7 @@
     <name>spring-boot-distributed-scheduled-locks-redis</name>
     <description>spring-boot-distributed-scheduled-locks-redis</description>
     <properties>
-        <java.version>23</java.version>
+        <java.version>25</java.version>
         <lombok.version>1.18.48</lombok.version>
         <maven-compiler-plugin.version>3.16.0</maven-compiler-plugin.version>
         <maven.compiler.proc>full</maven.compiler.proc>
@@ -75,8 +75,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <release>${java.version}</release>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.springframework.boot</groupId>
