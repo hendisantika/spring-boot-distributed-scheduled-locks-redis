@@ -13,7 +13,7 @@ services:
     networks:
       - my-network
   redis-insight:
-    image: redislabs/redisinsight:3.8.0
+    image: redislabs/redisinsight:3.10.1
     container_name: redis-insight
     ports:
       - "5540:5540"
